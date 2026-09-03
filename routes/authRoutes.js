@@ -32,9 +32,12 @@ router.post("/signup", async (req, res) => {
             });
         }
 
+        // Clean email
+        const cleanEmail = email.toLowerCase().trim();
+
         // Check existing user
         const existingUser = await User.findOne({
-            email: email.toLowerCase().trim(),
+            email: cleanEmail,
         });
 
         if (existingUser) {
@@ -50,7 +53,7 @@ router.post("/signup", async (req, res) => {
         // Create user
         const user = await User.create({
             name: name.trim(),
-            email: email.toLowerCase().trim(),
+            email: cleanEmail,
             password: hashedPassword,
         });
 
@@ -92,9 +95,12 @@ router.post("/login", async (req, res) => {
             });
         }
 
+        // Clean email
+        const cleanEmail = email.toLowerCase().trim();
+
         // Find user
         const user = await User.findOne({
-            email: email.toLowerCase().trim(),
+            email: cleanEmail,
         });
 
         if (!user) {
@@ -114,6 +120,16 @@ router.post("/login", async (req, res) => {
             return res.status(401).json({
                 success: false,
                 message: "Invalid email or password",
+            });
+        }
+
+        // Check JWT secret
+        if (!process.env.JWT_SECRET) {
+            console.error("JWT_SECRET is missing");
+
+            return res.status(500).json({
+                success: false,
+                message: "JWT configuration is missing",
             });
         }
 
@@ -152,5 +168,22 @@ router.post("/login", async (req, res) => {
     }
 });
 
+
+// ===============================
+// LOGOUT
+// POST /auth/logout
+// ===============================
+
+router.post("/logout", (req, res) => {
+    return res.status(200).json({
+        success: true,
+        message: "Logout successful",
+    });
+});
+
+
+// ===============================
+// EXPORT ROUTER
+// ===============================
 
 module.exports = router;

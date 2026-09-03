@@ -2,24 +2,68 @@
   "newArrivals": [
     {
       "productId": "NA001",
-      "title": "T-Shirt With Tape Details",
-      "price": 120,
-      "oldPrice": 150,
+      "title": "Classic Cotton Tee",
+      "price": 29,
+      "oldPrice": 36,
       "discount": "-20%",
-      "rating": 4.5,
-      "imageUrl": "https://example.com/tshirt.jpg",
-      "description": "Comfortable casual t-shirt with tape details.",
+      "rating": 4.8,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic comfortable cotton t-shirt for daily wear.",
       "category": "casual"
     },
     {
       "productId": "NA002",
-      "title": "Skinny Fit Jeans",
-      "price": 180,
-      "oldPrice": 220,
+      "title": "Urban Overshirt",
+      "price": 49,
+      "oldPrice": 60,
       "discount": "-18%",
-      "rating": 4.2,
-      "imageUrl": "https://example.com/jeans.jpg",
-      "description": "Modern skinny fit jeans.",
+      "rating": 4.6,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Stylish urban overshirt perfect for layering.",
+      "category": "casual"
+    },
+    {
+      "productId": "NA003",
+      "title": "Summer Linen Shirt",
+      "price": 59,
+      "oldPrice": 70,
+      "discount": "-15%",
+      "rating": 4.7,
+      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+      "description": "Lightweight linen shirt for hot summer days.",
+      "category": "casual"
+    },
+    {
+      "productId": "NA004",
+      "title": "Street Flex Hoodie",
+      "price": 69,
+      "oldPrice": 85,
+      "discount": "-19%",
+      "rating": 4.9,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Cozy street flex hoodie with modern fit.",
+      "category": "casual"
+    },
+    {
+      "productId": "NA005",
+      "title": "Slim Denim",
+      "price": 75,
+      "oldPrice": 95,
+      "discount": "-21%",
+      "rating": 4.5,
+      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
+      "description": "Modern slim fit denim jeans.",
+      "category": "casual"
+    },
+    {
+      "productId": "NA006",
+      "title": "Weekend Cargo",
+      "price": 82,
+      "oldPrice": 100,
+      "discount": "-18%",
+      "rating": 4.4,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Relaxed weekend cargo pants with extra pockets.",
       "category": "casual"
     }
   ],
@@ -27,13 +71,68 @@
   "topSelling": [
     {
       "productId": "TS001",
-      "title": "Checkered Shirt",
-      "price": 140,
-      "oldPrice": 170,
-      "discount": "-17%",
+      "title": "Signature Hoodie",
+      "price": 89,
+      "oldPrice": 110,
+      "discount": "-19%",
+      "rating": 4.9,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Premium quality signature hoodie.",
+      "category": "casual"
+    },
+    {
+      "productId": "TS002",
+      "title": "Premium Joggers",
+      "price": 64,
+      "oldPrice": 80,
+      "discount": "-20%",
+      "rating": 4.7,
+      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
+      "description": "Ultra-comfortable soft premium joggers.",
+      "category": "casual"
+    },
+    {
+      "productId": "TS003",
+      "title": "Everyday Polo",
+      "price": 39,
+      "oldPrice": 50,
+      "discount": "-22%",
       "rating": 4.6,
-      "imageUrl": "https://example.com/shirt.jpg",
-      "description": "Classic checkered shirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic everyday polo shirt.",
+      "category": "casual"
+    },
+    {
+      "productId": "TS004",
+      "title": "Layered Bomber",
+      "price": 94,
+      "oldPrice": 120,
+      "discount": "-21%",
+      "rating": 4.8,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Trendy layered bomber jacket.",
+      "category": "casual"
+    },
+    {
+      "productId": "TS005",
+      "title": "Commuter Knit",
+      "price": 58,
+      "oldPrice": 75,
+      "discount": "-22%",
+      "rating": 4.5,
+      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
+      "description": "Comfortable commute knit sweater.",
+      "category": "casual"
+    },
+    {
+      "productId": "TS006",
+      "title": "Urban Layer Tee",
+      "price": 46,
+      "oldPrice": 60,
+      "discount": "-23%",
+      "rating": 4.6,
+      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+      "description": "Minimalist urban layering t-shirt.",
       "category": "casual"
     }
   ],
@@ -41,13 +140,46 @@
   "youMightAlsoLike": [
     {
       "productId": "YM001",
-      "title": "Striped T-Shirt",
-      "price": 100,
-      "oldPrice": 130,
-      "discount": "-23%",
-      "rating": 4.3,
-      "imageUrl": "https://example.com/striped.jpg",
-      "description": "Comfortable striped t-shirt.",
+      "title": "Coastal Casual",
+      "price": 54,
+      "oldPrice": 70,
+      "discount": "-22%",
+      "rating": 4.5,
+      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+      "description": "Relaxed coastal style casual shirt.",
+      "category": "casual"
+    },
+    {
+      "productId": "YM002",
+      "title": "Night Shift Tees",
+      "price": 33,
+      "oldPrice": 45,
+      "discount": "-26%",
+      "rating": 4.4,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Dark series casual t-shirt.",
+      "category": "casual"
+    },
+    {
+      "productId": "YM003",
+      "title": "Fit Explorer",
+      "price": 71,
+      "oldPrice": 90,
+      "discount": "-21%",
+      "rating": 4.7,
+      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
+      "description": "Durable explorer series pants.",
+      "category": "casual"
+    },
+    {
+      "productId": "YM004",
+      "title": "Minimal Knit",
+      "price": 48,
+      "oldPrice": 60,
+      "discount": "-20%",
+      "rating": 4.6,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Clean and minimal style knitwear.",
       "category": "casual"
     }
   ],
@@ -55,13 +187,35 @@
   "casual": [
     {
       "productId": "CA001",
-      "title": "Casual Hoodie",
-      "price": 200,
-      "oldPrice": 250,
+      "title": "Classic Cotton Tee",
+      "price": 29,
+      "oldPrice": 36,
       "discount": "-20%",
+      "rating": 4.8,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Warm and comfortable casual tee.",
+      "category": "casual"
+    },
+    {
+      "productId": "CA002",
+      "title": "Relaxed Fit Chinos",
+      "price": 55,
+      "oldPrice": 70,
+      "discount": "-21%",
+      "rating": 4.6,
+      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
+      "description": "Breathable cotton chinos for daily smart casual looks.",
+      "category": "casual"
+    },
+    {
+      "productId": "CA003",
+      "title": "Oversized Graphic Tee",
+      "price": 35,
+      "oldPrice": 45,
+      "discount": "-22%",
       "rating": 4.7,
-      "imageUrl": "https://example.com/hoodie.jpg",
-      "description": "Warm and comfortable casual hoodie.",
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Streetwear oversized t-shirt with back print.",
       "category": "casual"
     }
   ],
@@ -74,8 +228,30 @@
       "oldPrice": 400,
       "discount": "-12%",
       "rating": 4.8,
-      "imageUrl": "https://example.com/blazer.jpg",
-      "description": "Premium formal blazer.",
+      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+      "description": "Premium formal blazer for business meetings.",
+      "category": "formal"
+    },
+    {
+      "productId": "FO002",
+      "title": "Slim Fit Dress Shirt",
+      "price": 65,
+      "oldPrice": 80,
+      "discount": "-18%",
+      "rating": 4.7,
+      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+      "description": "Crisp cotton dress shirt with buttoned cuffs.",
+      "category": "formal"
+    },
+    {
+      "productId": "FO003",
+      "title": "Tailored Suit Trousers",
+      "price": 95,
+      "oldPrice": 120,
+      "discount": "-20%",
+      "rating": 4.6,
+      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic tailored trousers with sharp crease.",
       "category": "formal"
     }
   ],
@@ -88,8 +264,30 @@
       "oldPrice": 280,
       "discount": "-21%",
       "rating": 4.4,
-      "imageUrl": "https://example.com/party-shirt.jpg",
-      "description": "Stylish party wear shirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Stylish party wear shirt with subtle gloss finish.",
+      "category": "party"
+    },
+    {
+      "productId": "PA002",
+      "title": "Velvet Dinner Jacket",
+      "price": 290,
+      "oldPrice": 350,
+      "discount": "-17%",
+      "rating": 4.9,
+      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+      "description": "Luxurious velvet jacket for evening parties.",
+      "category": "party"
+    },
+    {
+      "productId": "PA003",
+      "title": "Printed Satin Shirt",
+      "price": 85,
+      "oldPrice": 110,
+      "discount": "-22%",
+      "rating": 4.5,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "Trendy printed satin shirt for nightlife outfit.",
       "category": "party"
     }
   ],
@@ -102,8 +300,30 @@
       "oldPrice": 160,
       "discount": "-19%",
       "rating": 4.5,
-      "imageUrl": "https://example.com/gym-shirt.jpg",
-      "description": "Lightweight gym training t-shirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
+      "description": "Lightweight sweat-wicking gym training t-shirt.",
+      "category": "gym"
+    },
+    {
+      "productId": "GY002",
+      "title": "Pro Performance Shorts",
+      "price": 42,
+      "oldPrice": 55,
+      "discount": "-23%",
+      "rating": 4.8,
+      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
+      "description": "Flexible workout shorts with zip pockets.",
+      "category": "gym"
+    },
+    {
+      "productId": "GY003",
+      "title": "Compression Tank Top",
+      "price": 38,
+      "oldPrice": 48,
+      "discount": "-20%",
+      "rating": 4.6,
+      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
+      "description": "High-stretch compression tank for intense workouts.",
       "category": "gym"
     }
   ]

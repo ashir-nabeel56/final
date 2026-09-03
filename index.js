@@ -1,15 +1,14 @@
+// Load environment variables FIRST
+const dotenv = require("dotenv");
+dotenv.config();
+
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
 
 const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
-
-
-// Load environment variables
-dotenv.config();
 
 
 // Create Express app
@@ -39,7 +38,10 @@ app.use(async (req, res, next) => {
         await connectDB();
         next();
     } catch (error) {
-        console.error("Database Middleware Error:", error.message);
+        console.error(
+            "Database Middleware Error:",
+            error.message
+        );
 
         return res.status(500).json({
             success: false,
@@ -93,24 +95,22 @@ app.use((err, req, res, next) => {
 
 
 // ===============================
-// LOCAL DEVELOPMENT SERVER
+// LOCAL DEVELOPMENT
 // ===============================
 
 if (process.env.NODE_ENV !== "production") {
     const PORT = process.env.PORT || 8000;
 
-    connectDB()
-        .then(() => {
-            app.listen(PORT, () => {
-                console.log(`Server running on http://localhost:${PORT}`);
-            });
-        })
-        .catch((error) => {
-            console.error("Server startup failed:", error.message);
-            process.exit(1);
-        });
+    app.listen(PORT, () => {
+        console.log(
+            `Server running on http://localhost:${PORT}`
+        );
+    });
 }
 
 
-// Export for Vercel
+// ===============================
+// VERCEL EXPORT
+// ===============================
+
 module.exports = app;

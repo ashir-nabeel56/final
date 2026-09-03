@@ -19,12 +19,11 @@ const app = express();
 // MIDDLEWARE
 // ===============================
 
-app.use(
-    cors({
-        origin: true,
-        credentials: true,
-    })
-);
+app.use(cors({
+    origin: "*",   // ya specific: "https://final-git-main-ashir-nabeel-s-projects.vercel.app"
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 app.use(express.json());
 

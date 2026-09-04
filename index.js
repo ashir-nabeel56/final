@@ -10,6 +10,7 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 
 // Create Express app
@@ -59,13 +60,13 @@ app.get("/", (req, res) => {
 // ===============================
 // ROUTES
 // ===============================
-
 app.use("/auth", authRoutes);
 
 app.use("/products", productRoutes);
 
 app.use("/cart", cartRoutes);
 
+app.use("/orders", orderRoutes);
 
 // ===============================
 // 404 HANDLER

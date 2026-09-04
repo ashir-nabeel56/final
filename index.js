@@ -9,6 +9,7 @@ const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 const productRoutes = require("./routes/productRoutes");
+const cartRoutes = require("./routes/cartRoutes");
 
 
 // Create Express app
@@ -18,7 +19,8 @@ const app = express();
 // ===============================
 // MIDDLEWARE
 // ===============================
-app.use(cors())
+
+app.use(cors());
 
 app.use(express.json());
 
@@ -59,7 +61,10 @@ app.get("/", (req, res) => {
 // ===============================
 
 app.use("/auth", authRoutes);
+
 app.use("/products", productRoutes);
+
+app.use("/cart", cartRoutes);
 
 
 // ===============================

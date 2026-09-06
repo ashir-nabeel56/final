@@ -1,265 +1,301 @@
 const express = require("express");
+const mongoose = require("mongoose");
 
 const Cart = require("../models/cart");
 const Order = require("../models/orders");
 const authMiddleware = require("../middleware/authMiddleware");
+// Optional: Agar admin middleware alag se banaya ho toh yahan import karein
+// const adminMiddleware = require("../middleware/adminMiddleware");
 
 const router = express.Router();
 
+// Helper: Check valid MongoDB ObjectId
+const isValidObjectId = (id) => mongoose.Types.ObjectId.isValid(id);
 
 // =====================================
 // PLACE ORDER FROM CART
 // POST /orders
 // =====================================
-
 router.post("/", authMiddleware, async (req, res) => {
-    try {
-        const cart = await Cart.findOne({
-            user: req.user.userId,
-        }).populate("items.product");
+  // Use Mongoose Session for Atomic Transactions
+  const session = await mongoose.startSession();
+  session.startTransaction();
 
-        if (!cart || cart.items.length === 0) {
-            return res.status(400).json({
-                success: false,
-                message: "Cart is empty",
-            });
-        }
+  try {
+    const cart = await Cart.findOne({
+      user: req.user.userId,
+    })
+      .populate("items.product")
+      .session(session);
 
-        let totalPrice = 0;
-
-        const orderItems = cart.items.map((item) => {
-            const price = item.product.price;
-
-            totalPrice += price * item.quantity;
-
-            return {
-                product: item.product._id,
-                quantity: item.quantity,
-                price,
-            };
-        });
-
-        const order = await Order.create({
-            user: req.user.userId,
-            items: orderItems,
-            totalPrice,
-            status: "pending",
-        });
-
-        // Order create hone ke baad cart empty
-        cart.items = [];
-        await cart.save();
-
-        const populatedOrder = await Order.findById(order._id)
-            .populate("user", "name email")
-            .populate("items.product");
-
-        return res.status(201).json({
-            success: true,
-            message: "Order placed successfully",
-            order: populatedOrder,
-        });
-
-    } catch (error) {
-        console.error("Place Order Error:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Failed to place order",
-            error: error.message,
-        });
+    if (!cart || cart.items.length === 0) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).json({
+        success: false,
+        message: "Cart is empty",
+      });
     }
+
+    let totalPrice = 0;
+
+    const orderItems = cart.items.map((item) => {
+      if (!item.product) {
+        throw new Error("One or more products in your cart no longer exist.");
+      }
+
+      const price = item.product.price;
+      totalPrice += price * item.quantity;
+
+      return {
+        product: item.product._id,
+        quantity: item.quantity,
+        price,
+      };
+    });
+
+    // Create Order
+    const [order] = await Order.create(
+      [
+        {
+          user: req.user.userId,
+          items: orderItems,
+          totalPrice,
+          status: "pending",
+        },
+      ],
+      { session }
+    );
+
+    // Empty User Cart
+    cart.items = [];
+    await cart.save({ session });
+
+    // Commit Transaction
+    await session.commitTransaction();
+    session.endSession();
+
+    // Populate created order for response
+    const populatedOrder = await Order.findById(order._id)
+      .populate("user", "name email")
+      .populate("items.product");
+
+    return res.status(201).json({
+      success: true,
+      message: "Order placed successfully",
+      order: populatedOrder,
+    });
+  } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
+
+    console.error("Place Order Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to place order",
+      error: error.message,
+    });
+  }
 });
 
-
 // =====================================
-// GET MY ORDERS
+// GET MY ORDERS (Logged-in User)
 // GET /orders/my
 // =====================================
-
 router.get("/my", authMiddleware, async (req, res) => {
-    try {
-        const orders = await Order.find({
-            user: req.user.userId,
-        })
-            .populate("items.product")
-            .sort({ createdAt: -1 });
+  try {
+    const orders = await Order.find({
+      user: req.user.userId,
+    })
+      .populate("items.product")
+      .sort({ createdAt: -1 });
 
-        return res.status(200).json({
-            success: true,
-            count: orders.length,
-            orders,
-        });
-
-    } catch (error) {
-        console.error("My Orders Error:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Failed to fetch orders",
-        });
-    }
+    return res.status(200).json({
+      success: true,
+      count: orders.length,
+      orders,
+    });
+  } catch (error) {
+    console.error("My Orders Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch orders",
+    });
+  }
 });
 
-
 // =====================================
-// GET ALL ORDERS
+// GET ALL ORDERS (Admin Only)
 // GET /orders
 // =====================================
-
 router.get("/", authMiddleware, async (req, res) => {
-    try {
-        const orders = await Order.find()
-            .populate("user", "name email")
-            .populate("items.product")
-            .sort({ createdAt: -1 });
+  try {
+    const orders = await Order.find()
+      .populate("user", "name email")
+      .populate("items.product")
+      .sort({ createdAt: -1 });
 
-        return res.status(200).json({
-            success: true,
-            count: orders.length,
-            orders,
-        });
-
-    } catch (error) {
-        console.error("Get All Orders Error:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Failed to fetch orders",
-        });
-    }
+    return res.status(200).json({
+      success: true,
+      count: orders.length,
+      orders,
+    });
+  } catch (error) {
+    console.error("Get All Orders Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch orders",
+    });
+  }
 });
-
 
 // =====================================
 // GET SINGLE ORDER
 // GET /orders/:orderId
 // =====================================
-
 router.get("/:orderId", authMiddleware, async (req, res) => {
-    try {
-        const order = await Order.findById(req.params.orderId)
-            .populate("user", "name email")
-            .populate("items.product");
+  try {
+    const { orderId } = req.params;
 
-        if (!order) {
-            return res.status(404).json({
-                success: false,
-                message: "Order not found",
-            });
-        }
-
-        return res.status(200).json({
-            success: true,
-            order,
-        });
-
-    } catch (error) {
-        console.error("Get Order Error:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Failed to fetch order",
-        });
+    if (!isValidObjectId(orderId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Order ID format",
+      });
     }
+
+    const order = await Order.findById(orderId)
+      .populate("user", "name email")
+      .populate("items.product");
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    // Check authorization: Admin access or owner access
+    if (
+      order.user._id.toString() !== req.user.userId &&
+      req.user.role !== "admin"
+    ) {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied to this order",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      order,
+    });
+  } catch (error) {
+    console.error("Get Order Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch order",
+    });
+  }
 });
 
-
 // =====================================
-// UPDATE ORDER STATUS
+// UPDATE ORDER STATUS (Admin Only)
 // PUT /orders/:orderId
 // =====================================
-
 router.put("/:orderId", authMiddleware, async (req, res) => {
-    try {
-        const { status } = req.body;
+  try {
+    const { orderId } = req.params;
+    const { status } = req.body;
 
-        const allowedStatuses = [
-            "pending",
-            "processing",
-            "shipped",
-            "delivered",
-            "cancelled",
-        ];
-
-        if (!allowedStatuses.includes(status)) {
-            return res.status(400).json({
-                success: false,
-                message: "Invalid order status",
-            });
-        }
-
-        const order = await Order.findByIdAndUpdate(
-            req.params.orderId,
-            {
-                status,
-            },
-            {
-                new: true,
-                runValidators: true,
-            }
-        )
-            .populate("user", "name email")
-            .populate("items.product");
-
-        if (!order) {
-            return res.status(404).json({
-                success: false,
-                message: "Order not found",
-            });
-        }
-
-        return res.status(200).json({
-            success: true,
-            message: "Order status updated successfully",
-            order,
-        });
-
-    } catch (error) {
-        console.error("Update Order Error:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Failed to update order",
-            error: error.message,
-        });
+    if (!isValidObjectId(orderId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Order ID format",
+      });
     }
+
+    const allowedStatuses = [
+      "pending",
+      "processing",
+      "shipped",
+      "delivered",
+      "cancelled",
+    ];
+
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid order status",
+      });
+    }
+
+    const order = await Order.findByIdAndUpdate(
+      orderId,
+      { status },
+      { new: true, runValidators: true }
+    )
+      .populate("user", "name email")
+      .populate("items.product");
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Order status updated successfully",
+      order,
+    });
+  } catch (error) {
+    console.error("Update Order Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to update order",
+      error: error.message,
+    });
+  }
 });
 
-
 // =====================================
-// DELETE ORDER
+// DELETE ORDER (Admin Only)
 // DELETE /orders/:orderId
 // =====================================
-
 router.delete("/:orderId", authMiddleware, async (req, res) => {
-    try {
-        const order = await Order.findByIdAndDelete(
-            req.params.orderId
-        );
+  try {
+    const { orderId } = req.params;
 
-        if (!order) {
-            return res.status(404).json({
-                success: false,
-                message: "Order not found",
-            });
-        }
-
-        return res.status(200).json({
-            success: true,
-            message: "Order deleted successfully",
-        });
-
-    } catch (error) {
-        console.error("Delete Order Error:", error);
-
-        return res.status(500).json({
-            success: false,
-            message: "Failed to delete order",
-            error: error.message,
-        });
+    if (!isValidObjectId(orderId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid Order ID format",
+      });
     }
-});
 
+    const order = await Order.findByIdAndDelete(orderId);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Order deleted successfully",
+    });
+  } catch (error) {
+    console.error("Delete Order Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to delete order",
+      error: error.message,
+    });
+  }
+});
 
 module.exports = router;

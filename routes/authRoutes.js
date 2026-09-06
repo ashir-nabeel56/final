@@ -16,7 +16,6 @@ router.post("/signup", async (req, res) => {
     try {
         const { name, email, password } = req.body;
 
-        // Basic validation
         if (!name || !email || !password) {
             return res.status(400).json({
                 success: false,
@@ -24,7 +23,6 @@ router.post("/signup", async (req, res) => {
             });
         }
 
-        // Password minimum length
         if (password.length < 6) {
             return res.status(400).json({
                 success: false,
@@ -32,10 +30,8 @@ router.post("/signup", async (req, res) => {
             });
         }
 
-        // Clean email
         const cleanEmail = email.toLowerCase().trim();
 
-        // Check existing user
         const existingUser = await User.findOne({
             email: cleanEmail,
         });
@@ -47,23 +43,24 @@ router.post("/signup", async (req, res) => {
             });
         }
 
-        // Hash password
         const hashedPassword = await bcrypt.hash(password, 12);
 
-        // Create user
         const user = await User.create({
             name: name.trim(),
             email: cleanEmail,
             password: hashedPassword,
+            role: "user",
         });
 
         return res.status(201).json({
             success: true,
             message: "User registered successfully",
+
             user: {
                 id: user._id,
                 name: user.name,
                 email: user.email,
+                role: user.role,
             },
         });
 
@@ -87,7 +84,6 @@ router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        // Validation
         if (!email || !password) {
             return res.status(400).json({
                 success: false,
@@ -95,10 +91,8 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        // Clean email
         const cleanEmail = email.toLowerCase().trim();
 
-        // Find user
         const user = await User.findOne({
             email: cleanEmail,
         });
@@ -110,7 +104,6 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        // Compare password
         const passwordMatch = await bcrypt.compare(
             password,
             user.password
@@ -123,7 +116,6 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        // Check JWT secret
         if (!process.env.JWT_SECRET) {
             console.error("JWT_SECRET is missing");
 
@@ -133,17 +125,27 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        // Create JWT
+
+        // ===============================
+        // CREATE JWT
+        // ===============================
+
         const token = jwt.sign(
             {
                 userId: user._id,
                 email: user.email,
+                role: user.role,
             },
             process.env.JWT_SECRET,
             {
                 expiresIn: "7d",
             }
         );
+
+
+        // ===============================
+        // RESPONSE
+        // ===============================
 
         return res.status(200).json({
             success: true,
@@ -155,6 +157,7 @@ router.post("/login", async (req, res) => {
                 id: user._id,
                 name: user.name,
                 email: user.email,
+                role: user.role,
             },
         });
 
@@ -164,6 +167,31 @@ router.post("/login", async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Server error during login",
+        });
+    }
+});
+
+
+// ===============================
+// GET ALL USERS
+// GET /auth/users
+// ===============================
+
+router.get("/users", async (req, res) => {
+    try {
+        const users = await User.find().select("-password");
+
+        return res.status(200).json({
+            success: true,
+            count: users.length,
+            users,
+        });
+    } catch (error) {
+        console.error("Get Users Error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Server error while fetching users",
         });
     }
 });
@@ -181,9 +209,5 @@ router.post("/logout", (req, res) => {
     });
 });
 
-
-// ===============================
-// EXPORT ROUTER
-// ===============================
 
 module.exports = router;

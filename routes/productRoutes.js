@@ -6,13 +6,18 @@ const productData = require("../data/product.json");
 const router = express.Router();
 
 // ===============================
-// GET ALL PRODUCTS
+// GET ALL PRODUCTS (With Optional Filtering)
 // GET /products
 // ===============================
-
 router.get("/", async (req, res) => {
     try {
-        const products = await Product.find().sort({
+        const { section, category } = req.query;
+        let filter = {};
+
+        if (section) filter.section = section;
+        if (category) filter.category = { $regex: `^${category}$`, $options: "i" };
+
+        const products = await Product.find(filter).sort({
             createdAt: -1,
         });
 
@@ -27,6 +32,7 @@ router.get("/", async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Failed to fetch products",
+            error: error.message,
         });
     }
 });
@@ -36,7 +42,6 @@ router.get("/", async (req, res) => {
 // GET PRODUCTS BY CATEGORY
 // GET /products/category/:categoryName
 // ===============================
-
 router.get("/category/:categoryName", async (req, res) => {
     try {
         const categoryName = req.params.categoryName;
@@ -60,16 +65,49 @@ router.get("/category/:categoryName", async (req, res) => {
         return res.status(500).json({
             success: false,
             message: "Failed to fetch category products",
+            error: error.message,
         });
     }
 });
 
 
 // ===============================
-// ADD SINGLE PRODUCT
+// GET SINGLE PRODUCT BY ID
+// GET /products/:productId
+// ===============================
+router.get("/single/:productId", async (req, res) => {
+    try {
+        const { productId } = req.params;
+
+        const product = await Product.findOne({ productId });
+
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            product,
+        });
+    } catch (error) {
+        console.error("Single Product Fetch Error:", error);
+
+        return res.status(500).json({
+            success: false,
+            message: "Failed to fetch product",
+            error: error.message,
+        });
+    }
+});
+
+
+// ===============================
+// ADD SINGLE PRODUCT (Real-Time Emit)
 // POST /products
 // ===============================
-
 router.post("/", async (req, res) => {
     try {
         const {
@@ -106,15 +144,22 @@ router.post("/", async (req, res) => {
         const product = await Product.create({
             productId,
             title,
-            price,
-            oldPrice,
+            price: Number(price),
+            oldPrice: oldPrice ? Number(oldPrice) : undefined,
             discount,
-            rating,
+            rating: rating ? Number(rating) : 5,
             imageUrl,
             description,
             category,
             section,
         });
+
+        // ===================================================
+        // REAL-TIME SOCKET EMIT TO ADMIN PANEL
+        // ===================================================
+        if (req.io) {
+            req.io.emit("product_added", product);
+        }
 
         return res.status(201).json({
             success: true,
@@ -137,36 +182,15 @@ router.post("/", async (req, res) => {
 // UPDATE PRODUCT
 // PUT /products/:productId
 // ===============================
-
 router.put("/:productId", async (req, res) => {
     try {
         const { productId } = req.params;
 
-        const {
-            title,
-            price,
-            oldPrice,
-            discount,
-            rating,
-            imageUrl,
-            description,
-            category,
-            section,
-        } = req.body;
+        const updateData = req.body;
 
         const product = await Product.findOneAndUpdate(
             { productId },
-            {
-                title,
-                price,
-                oldPrice,
-                discount,
-                rating,
-                imageUrl,
-                description,
-                category,
-                section,
-            },
+            updateData,
             {
                 new: true,
                 runValidators: true,
@@ -178,6 +202,11 @@ router.put("/:productId", async (req, res) => {
                 success: false,
                 message: "Product not found",
             });
+        }
+
+        // Emit updated product
+        if (req.io) {
+            req.io.emit("product_updated", product);
         }
 
         return res.status(200).json({
@@ -201,7 +230,6 @@ router.put("/:productId", async (req, res) => {
 // DELETE PRODUCT
 // DELETE /products/:productId
 // ===============================
-
 router.delete("/:productId", async (req, res) => {
     try {
         const { productId } = req.params;
@@ -215,6 +243,11 @@ router.delete("/:productId", async (req, res) => {
                 success: false,
                 message: "Product not found",
             });
+        }
+
+        // Emit deleted event
+        if (req.io) {
+            req.io.emit("product_deleted", { productId });
         }
 
         return res.status(200).json({
@@ -238,7 +271,6 @@ router.delete("/:productId", async (req, res) => {
 // SEED PRODUCTS
 // POST /products/seed
 // ===============================
-
 router.post("/seed", async (req, res) => {
     try {
         const sections = [
@@ -264,6 +296,7 @@ router.post("/seed", async (req, res) => {
             });
         });
 
+        // Delete existing and re-seed
         await Product.deleteMany({});
 
         const insertedProducts = await Product.insertMany(
@@ -286,6 +319,4 @@ router.post("/seed", async (req, res) => {
     }
 });
 
-
 module.exports = router;
-

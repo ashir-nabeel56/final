@@ -7,7 +7,7 @@ const User = require("../models/User");
 const router = express.Router();
 
 
-// ===============================
+
 // SIGNUP
 // POST /auth/signup
 // ===============================

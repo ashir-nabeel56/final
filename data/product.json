@@ -7,8 +7,8 @@
       "oldPrice": 36,
       "discount": "-20%",
       "rating": 4.8,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Classic comfortable cotton t-shirt for daily wear.",
+      "imageUrl": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic comfortable cotton t-shirt for everyday casual wear.",
       "category": "casual"
     },
     {
@@ -18,8 +18,8 @@
       "oldPrice": 60,
       "discount": "-18%",
       "rating": 4.6,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Stylish urban overshirt perfect for layering.",
+      "imageUrl": "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=800&q=80",
+      "description": "Stylish urban overshirt perfect for modern layering.",
       "category": "casual"
     },
     {
@@ -29,8 +29,8 @@
       "oldPrice": 70,
       "discount": "-15%",
       "rating": 4.7,
-      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
-      "description": "Lightweight linen shirt for hot summer days.",
+      "imageUrl": "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?auto=format&fit=crop&w=800&q=80",
+      "description": "Lightweight linen shirt designed for warm summer days.",
       "category": "casual"
     },
     {
@@ -40,19 +40,19 @@
       "oldPrice": 85,
       "discount": "-19%",
       "rating": 4.9,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Cozy street flex hoodie with modern fit.",
+      "imageUrl": "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80",
+      "description": "Cozy hoodie with a relaxed fit and modern streetwear style.",
       "category": "casual"
     },
     {
       "productId": "NA005",
-      "title": "Slim Denim",
+      "title": "Slim Denim Jeans",
       "price": 75,
       "oldPrice": 95,
       "discount": "-21%",
       "rating": 4.5,
-      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
-      "description": "Modern slim fit denim jeans.",
+      "imageUrl": "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&w=800&q=80",
+      "description": "Modern slim-fit denim jeans for everyday outfits.",
       "category": "casual"
     },
     {
@@ -62,8 +62,30 @@
       "oldPrice": 100,
       "discount": "-18%",
       "rating": 4.4,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Relaxed weekend cargo pants with extra pockets.",
+      "imageUrl": "https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=800&q=80",
+      "description": "Relaxed cargo pants with multiple practical pockets.",
+      "category": "casual"
+    },
+    {
+      "productId": "NA007",
+      "title": "Essential Polo",
+      "price": 44,
+      "oldPrice": 55,
+      "discount": "-20%",
+      "rating": 4.6,
+      "imageUrl": "https://images.unsplash.com/photo-1625910513413-5fc45d0f7c67?auto=format&fit=crop&w=800&q=80",
+      "description": "Clean and versatile polo shirt for smart casual looks.",
+      "category": "casual"
+    },
+    {
+      "productId": "NA008",
+      "title": "Relaxed Knit Sweater",
+      "price": 78,
+      "oldPrice": 95,
+      "discount": "-18%",
+      "rating": 4.7,
+      "imageUrl": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80",
+      "description": "Soft knit sweater with a comfortable relaxed silhouette.",
       "category": "casual"
     }
   ],
@@ -76,8 +98,8 @@
       "oldPrice": 110,
       "discount": "-19%",
       "rating": 4.9,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Premium quality signature hoodie.",
+      "imageUrl": "https://images.unsplash.com/photo-1509942774463-acf339cf87d5?auto=format&fit=crop&w=800&q=80",
+      "description": "Premium hoodie with a comfortable fit and clean design.",
       "category": "casual"
     },
     {
@@ -87,8 +109,8 @@
       "oldPrice": 80,
       "discount": "-20%",
       "rating": 4.7,
-      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
-      "description": "Ultra-comfortable soft premium joggers.",
+      "imageUrl": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=800&q=80",
+      "description": "Ultra-comfortable joggers made for relaxed everyday wear.",
       "category": "casual"
     },
     {
@@ -98,19 +120,19 @@
       "oldPrice": 50,
       "discount": "-22%",
       "rating": 4.6,
-      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
-      "description": "Classic everyday polo shirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic polo shirt with a polished everyday appearance.",
       "category": "casual"
     },
     {
       "productId": "TS004",
-      "title": "Layered Bomber",
+      "title": "Classic Bomber",
       "price": 94,
       "oldPrice": 120,
       "discount": "-21%",
       "rating": 4.8,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Trendy layered bomber jacket.",
+      "imageUrl": "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80",
+      "description": "Trendy bomber jacket with a modern urban silhouette.",
       "category": "casual"
     },
     {
@@ -120,8 +142,8 @@
       "oldPrice": 75,
       "discount": "-22%",
       "rating": 4.5,
-      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
-      "description": "Comfortable commute knit sweater.",
+      "imageUrl": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80",
+      "description": "Comfortable knit sweater perfect for daily commuting.",
       "category": "casual"
     },
     {
@@ -131,8 +153,30 @@
       "oldPrice": 60,
       "discount": "-23%",
       "rating": 4.6,
-      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
-      "description": "Minimalist urban layering t-shirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1618354691373-d851c5c3c990?auto=format&fit=crop&w=800&q=80",
+      "description": "Minimal urban t-shirt designed for easy layering.",
+      "category": "casual"
+    },
+    {
+      "productId": "TS007",
+      "title": "Relaxed Denim Jacket",
+      "price": 88,
+      "oldPrice": 110,
+      "discount": "-20%",
+      "rating": 4.8,
+      "imageUrl": "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=800&q=80",
+      "description": "Timeless denim jacket with a relaxed modern fit.",
+      "category": "casual"
+    },
+    {
+      "productId": "TS008",
+      "title": "Modern Chino Pants",
+      "price": 59,
+      "oldPrice": 74,
+      "discount": "-20%",
+      "rating": 4.7,
+      "imageUrl": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=800&q=80",
+      "description": "Versatile chino pants for smart casual styling.",
       "category": "casual"
     }
   ],
@@ -140,46 +184,68 @@
   "youMightAlsoLike": [
     {
       "productId": "YM001",
-      "title": "Coastal Casual",
+      "title": "Coastal Casual Shirt",
       "price": 54,
       "oldPrice": 70,
       "discount": "-22%",
       "rating": 4.5,
-      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
-      "description": "Relaxed coastal style casual shirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1602810319428-019690571b5b?auto=format&fit=crop&w=800&q=80",
+      "description": "Relaxed casual shirt inspired by coastal fashion.",
       "category": "casual"
     },
     {
       "productId": "YM002",
-      "title": "Night Shift Tees",
+      "title": "Night Shift Tee",
       "price": 33,
       "oldPrice": 45,
       "discount": "-26%",
       "rating": 4.4,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Dark series casual t-shirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1618354691373-d851c5c3c990?auto=format&fit=crop&w=800&q=80",
+      "description": "Minimal dark-tone t-shirt for casual evening outfits.",
       "category": "casual"
     },
     {
       "productId": "YM003",
-      "title": "Fit Explorer",
+      "title": "Explorer Cargo Pants",
       "price": 71,
       "oldPrice": 90,
       "discount": "-21%",
       "rating": 4.7,
-      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
-      "description": "Durable explorer series pants.",
+      "imageUrl": "https://images.unsplash.com/photo-1517438476312-10d79c077509?auto=format&fit=crop&w=800&q=80",
+      "description": "Durable cargo pants designed for an active casual lifestyle.",
       "category": "casual"
     },
     {
       "productId": "YM004",
-      "title": "Minimal Knit",
+      "title": "Minimal Knitwear",
       "price": 48,
       "oldPrice": 60,
       "discount": "-20%",
       "rating": 4.6,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Clean and minimal style knitwear.",
+      "imageUrl": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?auto=format&fit=crop&w=800&q=80",
+      "description": "Clean minimal knitwear for simple everyday styling.",
+      "category": "casual"
+    },
+    {
+      "productId": "YM005",
+      "title": "Soft Flannel Shirt",
+      "price": 52,
+      "oldPrice": 65,
+      "discount": "-20%",
+      "rating": 4.5,
+      "imageUrl": "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=800&q=80",
+      "description": "Soft flannel shirt with a relaxed and comfortable fit.",
+      "category": "casual"
+    },
+    {
+      "productId": "YM006",
+      "title": "Classic Oxford Shirt",
+      "price": 62,
+      "oldPrice": 78,
+      "discount": "-21%",
+      "rating": 4.6,
+      "imageUrl": "https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic Oxford shirt for a clean polished appearance.",
       "category": "casual"
     }
   ],
@@ -187,13 +253,13 @@
   "casual": [
     {
       "productId": "CA001",
-      "title": "Classic Cotton Tee",
-      "price": 29,
-      "oldPrice": 36,
-      "discount": "-20%",
-      "rating": 4.8,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Warm and comfortable casual tee.",
+      "title": "Basic Crewneck",
+      "price": 42,
+      "oldPrice": 52,
+      "discount": "-19%",
+      "rating": 4.5,
+      "imageUrl": "https://images.unsplash.com/photo-1627225924765-552d49cf47ad?auto=format&fit=crop&w=800&q=80",
+      "description": "Minimal crewneck top made for versatile casual outfits.",
       "category": "casual"
     },
     {
@@ -203,8 +269,8 @@
       "oldPrice": 70,
       "discount": "-21%",
       "rating": 4.6,
-      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
-      "description": "Breathable cotton chinos for daily smart casual looks.",
+      "imageUrl": "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=800&q=80",
+      "description": "Breathable chinos for daily smart casual looks.",
       "category": "casual"
     },
     {
@@ -214,8 +280,19 @@
       "oldPrice": 45,
       "discount": "-22%",
       "rating": 4.7,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Streetwear oversized t-shirt with back print.",
+      "imageUrl": "https://images.unsplash.com/photo-1503341504253-dff4815485f1?auto=format&fit=crop&w=800&q=80",
+      "description": "Oversized graphic t-shirt with a modern streetwear look.",
+      "category": "casual"
+    },
+    {
+      "productId": "CA004",
+      "title": "Denim Trucker Jacket",
+      "price": 85,
+      "oldPrice": 105,
+      "discount": "-19%",
+      "rating": 4.8,
+      "imageUrl": "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic denim trucker jacket for everyday casual outfits.",
       "category": "casual"
     }
   ],
@@ -228,8 +305,8 @@
       "oldPrice": 400,
       "discount": "-12%",
       "rating": 4.8,
-      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
-      "description": "Premium formal blazer for business meetings.",
+      "imageUrl": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
+      "description": "Premium formal blazer suitable for business meetings and events.",
       "category": "formal"
     },
     {
@@ -239,8 +316,8 @@
       "oldPrice": 80,
       "discount": "-18%",
       "rating": 4.7,
-      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
-      "description": "Crisp cotton dress shirt with buttoned cuffs.",
+      "imageUrl": "https://images.unsplash.com/photo-1621072156002-e2fccdc0b176?auto=format&fit=crop&w=800&q=80",
+      "description": "Crisp dress shirt with a refined slim fit.",
       "category": "formal"
     },
     {
@@ -250,8 +327,19 @@
       "oldPrice": 120,
       "discount": "-20%",
       "rating": 4.6,
-      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
-      "description": "Classic tailored trousers with sharp crease.",
+      "imageUrl": "https://images.unsplash.com/photo-1598808503746-f34c53b9323e?auto=format&fit=crop&w=800&q=80",
+      "description": "Classic tailored trousers with a sharp professional finish.",
+      "category": "formal"
+    },
+    {
+      "productId": "FO004",
+      "title": "Executive Suit",
+      "price": 420,
+      "oldPrice": 500,
+      "discount": "-16%",
+      "rating": 4.9,
+      "imageUrl": "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?auto=format&fit=crop&w=800&q=80",
+      "description": "Elegant executive suit designed for professional occasions.",
       "category": "formal"
     }
   ],
@@ -264,8 +352,8 @@
       "oldPrice": 280,
       "discount": "-21%",
       "rating": 4.4,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Stylish party wear shirt with subtle gloss finish.",
+      "imageUrl": "https://images.unsplash.com/photo-1610652492500-ded49ceeb378?auto=format&fit=crop&w=800&q=80",
+      "description": "Stylish party shirt with a refined evening finish.",
       "category": "party"
     },
     {
@@ -275,8 +363,8 @@
       "oldPrice": 350,
       "discount": "-17%",
       "rating": 4.9,
-      "imageUrl": "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
-      "description": "Luxurious velvet jacket for evening parties.",
+      "imageUrl": "https://images.unsplash.com/photo-1507671286008-4c6b1f8c0f14?auto=format&fit=crop&w=800&q=80",
+      "description": "Luxurious dinner jacket designed for special evening occasions.",
       "category": "party"
     },
     {
@@ -286,8 +374,19 @@
       "oldPrice": 110,
       "discount": "-22%",
       "rating": 4.5,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "Trendy printed satin shirt for nightlife outfit.",
+      "imageUrl": "https://images.unsplash.com/photo-1602810319428-019690571b5b?auto=format&fit=crop&w=800&q=80",
+      "description": "Trendy printed satin-style shirt for stylish evening outfits.",
+      "category": "party"
+    },
+    {
+      "productId": "PA004",
+      "title": "Premium Party Blazer",
+      "price": 245,
+      "oldPrice": 300,
+      "discount": "-18%",
+      "rating": 4.8,
+      "imageUrl": "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80",
+      "description": "Premium blazer made for parties and special events.",
       "category": "party"
     }
   ],
@@ -300,8 +399,8 @@
       "oldPrice": 160,
       "discount": "-19%",
       "rating": 4.5,
-      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
-      "description": "Lightweight sweat-wicking gym training t-shirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1581655353564-df123a1eb820?auto=format&fit=crop&w=800&q=80",
+      "description": "Lightweight training t-shirt designed for active workouts.",
       "category": "gym"
     },
     {
@@ -311,8 +410,8 @@
       "oldPrice": 55,
       "discount": "-23%",
       "rating": 4.8,
-      "imageUrl": "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=800&q=80",
-      "description": "Flexible workout shorts with zip pockets.",
+      "imageUrl": "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=800&q=80",
+      "description": "Flexible workout shorts designed for comfortable movement.",
       "category": "gym"
     },
     {
@@ -322,9 +421,42 @@
       "oldPrice": 48,
       "discount": "-20%",
       "rating": 4.6,
-      "imageUrl": "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80",
-      "description": "High-stretch compression tank for intense workouts.",
+      "imageUrl": "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=800&q=80",
+      "description": "High-stretch training tank top for active gym sessions.",
+      "category": "gym"
+    },
+    {
+      "productId": "GY004",
+      "title": "Performance Joggers",
+      "price": 68,
+      "oldPrice": 85,
+      "discount": "-20%",
+      "rating": 4.7,
+      "imageUrl": "https://images.unsplash.com/photo-1552902865-b72c031ac5ea?auto=format&fit=crop&w=800&q=80",
+      "description": "Comfortable performance joggers suitable for training.",
       "category": "gym"
     }
   ]
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

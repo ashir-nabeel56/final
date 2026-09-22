@@ -1,12 +1,12 @@
 const express = require("express");
- 
+
 const Cart = require("../models/cart");
 const Order = require("../models/orders");
 const authMiddleware = require("../middleware/authMiddleware");
- 
+
 const router = express.Router();
- 
- 
+
+
 // ==================================================
 // PLACE ORDER
 // POST /orders
@@ -14,149 +14,134 @@ const router = express.Router();
 router.post("/", authMiddleware, async (req, res) => {
     try {
         const userId = req.user.userId;
- 
+
         console.log("Place order user:", userId);
- 
+
         const cart = await Cart.findOne({
             user: userId,
         }).populate("items.product");
- 
+
         if (!cart) {
             return res.status(400).json({
                 success: false,
                 message: "Cart not found",
             });
         }
- 
+
         if (!cart.items || cart.items.length === 0) {
             return res.status(400).json({
                 success: false,
                 message: "Cart is empty",
             });
         }
- 
-        // ==========================================
-        // FILTER OUT ORPHANED ITEMS
-        // (product ID that no longer exists in DB,
-        // e.g. after a reseed) instead of failing
-        // the whole checkout
-        // ==========================================
-        const validItems = cart.items.filter(
-            (item) => item.product
-        );
- 
-        const hadOrphanedItems =
-            validItems.length !== cart.items.length;
- 
-        if (validItems.length === 0) {
-            return res.status(400).json({
-                success: false,
-                message: "Cart is empty",
-            });
-        }
- 
+
         let subtotal = 0;
         const orderItems = [];
- 
-        for (const item of validItems) {
+
+        for (const item of cart.items) {
+            if (!item.product) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Product not found in cart",
+                });
+            }
+
             const price = Number(item.product.price);
             const quantity = Number(item.quantity);
- 
+
             if (!Number.isFinite(price) || price < 0) {
                 return res.status(400).json({
                     success: false,
                     message: "Invalid product price",
                 });
             }
- 
+
             if (!Number.isInteger(quantity) || quantity < 1) {
                 return res.status(400).json({
                     success: false,
                     message: "Invalid product quantity",
                 });
             }
- 
+
             subtotal += price * quantity;
- 
+
             orderItems.push({
                 product: item.product._id,
                 quantity,
                 price,
             });
         }
- 
- 
+
+
         // ==========================================
         // DISCOUNT
         // ==========================================
         const discountRate = 0.20;
- 
+
         const discount = Number(
             (subtotal * discountRate).toFixed(2)
         );
- 
- 
+
+
         // ==========================================
         // DELIVERY
         // ==========================================
         const deliveryFee = subtotal > 0 ? 15 : 0;
- 
- 
+
+
         // ==========================================
         // TOTAL
         // ==========================================
         const totalPrice = Number(
             (subtotal - discount + deliveryFee).toFixed(2)
         );
- 
- 
+
+
         // ==========================================
         // CREATE ORDER
         // ==========================================
         const order = await Order.create({
             user: userId,
- 
+
             items: orderItems,
- 
+
             subtotal: Number(subtotal.toFixed(2)),
- 
+
             discount,
- 
+
             deliveryFee,
- 
+
             totalPrice,
- 
+
             status: "pending",
         });
- 
- 
+
+
         // ==========================================
         // EMPTY CART
         // ==========================================
         cart.items = [];
- 
+
         await cart.save();
- 
- 
+
+
         // ==========================================
         // POPULATE ORDER
         // ==========================================
         const populatedOrder = await Order.findById(order._id)
             .populate("user", "name email")
             .populate("items.product");
- 
- 
+
+
         return res.status(201).json({
             success: true,
-            message: hadOrphanedItems
-                ? "Order placed successfully (some unavailable items were skipped)"
-                : "Order placed successfully",
+            message: "Order placed successfully",
             order: populatedOrder,
         });
- 
+
     } catch (error) {
         console.error("PLACE ORDER ERROR:", error);
- 
+
         return res.status(500).json({
             success: false,
             message: "Failed to place order",
@@ -164,8 +149,8 @@ router.post("/", authMiddleware, async (req, res) => {
         });
     }
 });
- 
- 
+
+
 // ==================================================
 // GET MY ORDERS
 // GET /orders/my
@@ -177,16 +162,16 @@ router.get("/my", authMiddleware, async (req, res) => {
         })
             .populate("items.product")
             .sort({ createdAt: -1 });
- 
+
         return res.status(200).json({
             success: true,
             count: orders.length,
             orders,
         });
- 
+
     } catch (error) {
         console.error("MY ORDERS ERROR:", error);
- 
+
         return res.status(500).json({
             success: false,
             message: "Failed to fetch orders",
@@ -194,8 +179,8 @@ router.get("/my", authMiddleware, async (req, res) => {
         });
     }
 });
- 
- 
+
+
 // ==================================================
 // GET ALL ORDERS
 // GET /orders
@@ -206,16 +191,16 @@ router.get("/", authMiddleware, async (req, res) => {
             .populate("user", "name email")
             .populate("items.product")
             .sort({ createdAt: -1 });
- 
+
         return res.status(200).json({
             success: true,
             count: orders.length,
             orders,
         });
- 
+
     } catch (error) {
         console.error("ALL ORDERS ERROR:", error);
- 
+
         return res.status(500).json({
             success: false,
             message: "Failed to fetch orders",
@@ -223,8 +208,8 @@ router.get("/", authMiddleware, async (req, res) => {
         });
     }
 });
- 
- 
+
+
 // ==================================================
 // GET SINGLE ORDER
 // GET /orders/:orderId
@@ -234,22 +219,22 @@ router.get("/:orderId", authMiddleware, async (req, res) => {
         const order = await Order.findById(req.params.orderId)
             .populate("user", "name email")
             .populate("items.product");
- 
+
         if (!order) {
             return res.status(404).json({
                 success: false,
                 message: "Order not found",
             });
         }
- 
+
         return res.status(200).json({
             success: true,
             order,
         });
- 
+
     } catch (error) {
         console.error("GET ORDER ERROR:", error);
- 
+
         return res.status(500).json({
             success: false,
             message: "Failed to fetch order",
@@ -257,8 +242,8 @@ router.get("/:orderId", authMiddleware, async (req, res) => {
         });
     }
 });
- 
- 
+
+
 // ==================================================
 // UPDATE ORDER STATUS
 // PUT /orders/:orderId
@@ -266,7 +251,7 @@ router.get("/:orderId", authMiddleware, async (req, res) => {
 router.put("/:orderId", authMiddleware, async (req, res) => {
     try {
         const { status } = req.body;
- 
+
         const allowedStatuses = [
             "pending",
             "processing",
@@ -274,14 +259,14 @@ router.put("/:orderId", authMiddleware, async (req, res) => {
             "delivered",
             "cancelled",
         ];
- 
+
         if (!allowedStatuses.includes(status)) {
             return res.status(400).json({
                 success: false,
                 message: "Invalid order status",
             });
         }
- 
+
         const order = await Order.findByIdAndUpdate(
             req.params.orderId,
             { status },
@@ -292,23 +277,23 @@ router.put("/:orderId", authMiddleware, async (req, res) => {
         )
             .populate("user", "name email")
             .populate("items.product");
- 
+
         if (!order) {
             return res.status(404).json({
                 success: false,
                 message: "Order not found",
             });
         }
- 
+
         return res.status(200).json({
             success: true,
             message: "Order status updated successfully",
             order,
         });
- 
+
     } catch (error) {
         console.error("UPDATE ORDER ERROR:", error);
- 
+
         return res.status(500).json({
             success: false,
             message: "Failed to update order",
@@ -316,8 +301,8 @@ router.put("/:orderId", authMiddleware, async (req, res) => {
         });
     }
 });
- 
- 
+
+
 // ==================================================
 // DELETE ORDER
 // DELETE /orders/:orderId
@@ -327,22 +312,22 @@ router.delete("/:orderId", authMiddleware, async (req, res) => {
         const order = await Order.findByIdAndDelete(
             req.params.orderId
         );
- 
+
         if (!order) {
             return res.status(404).json({
                 success: false,
                 message: "Order not found",
             });
         }
- 
+
         return res.status(200).json({
             success: true,
             message: "Order deleted successfully",
         });
- 
+
     } catch (error) {
         console.error("DELETE ORDER ERROR:", error);
- 
+
         return res.status(500).json({
             success: false,
             message: "Failed to delete order",
@@ -350,3 +335,333 @@ router.delete("/:orderId", authMiddleware, async (req, res) => {
         });
     }
 });
+
+
+module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// const express = require("express");
+
+// const Cart = require("../models/cart");
+// const Order = require("../models/orders");
+// const authMiddleware = require("../middleware/authMiddleware");
+
+// const router = express.Router();
+
+
+// // =====================================
+// // PLACE ORDER FROM CART
+// // POST /orders
+// // =====================================
+// router.post("/", authMiddleware, async (req, res) => {
+//     try {
+//         const cart = await Cart.findOne({
+//             user: req.user.userId,
+//         }).populate("items.product");
+
+//         if (!cart || cart.items.length === 0) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Cart is empty",
+//             });
+//         }
+
+//         let subtotal = 0;
+
+//         const orderItems = cart.items.map((item) => {
+
+//             if (!item.product) {
+//                 throw new Error("Product not found");
+//             }
+
+//             const price = Number(item.product.price) || 0;
+//             const quantity = Number(item.quantity) || 1;
+
+//             subtotal += price * quantity;
+
+//             return {
+//                 product: item.product._id,
+//                 quantity,
+//                 price,
+//             };
+//         });
+
+
+//         // =====================================
+//         // DISCOUNT + DELIVERY
+//         // =====================================
+
+//         const discountRate = 0.20;
+
+//         const discount = subtotal * discountRate;
+
+//         const deliveryFee = subtotal > 0 ? 15 : 0;
+
+//         const totalPrice =
+//             subtotal - discount + deliveryFee;
+
+
+//         // =====================================
+//         // CREATE ORDER
+//         // =====================================
+
+//         const order = await Order.create({
+//             user: req.user.userId,
+//             items: orderItems,
+//             totalPrice,
+//             status: "pending",
+//         });
+
+
+//         // =====================================
+//         // EMPTY CART
+//         // =====================================
+
+//         cart.items = [];
+
+//         await cart.save();
+
+
+//         // =====================================
+//         // POPULATE ORDER
+//         // =====================================
+
+//         const populatedOrder = await Order.findById(order._id)
+//             .populate("user", "name email")
+//             .populate("items.product");
+
+
+//         return res.status(201).json({
+//             success: true,
+//             message: "Order placed successfully",
+//             order: populatedOrder,
+//         });
+
+//     } catch (error) {
+
+//         console.error("Place Order Error:", error);
+
+//         return res.status(500).json({
+//             success: false,
+//             message: "Failed to place order",
+//             error: error.message,
+//         });
+//     }
+// });
+
+
+// // =====================================
+// // GET MY ORDERS
+// // GET /orders/my
+// // =====================================
+
+// router.get("/my", authMiddleware, async (req, res) => {
+//     try {
+
+//         const orders = await Order.find({
+//             user: req.user.userId,
+//         })
+//             .populate("items.product")
+//             .sort({ createdAt: -1 });
+
+//         return res.status(200).json({
+//             success: true,
+//             count: orders.length,
+//             orders,
+//         });
+
+//     } catch (error) {
+
+//         console.error("My Orders Error:", error);
+
+//         return res.status(500).json({
+//             success: false,
+//             message: "Failed to fetch orders",
+//         });
+//     }
+// });
+
+
+// // =====================================
+// // GET ALL ORDERS
+// // GET /orders
+// // =====================================
+
+// router.get("/", authMiddleware, async (req, res) => {
+//     try {
+
+//         const orders = await Order.find()
+//             .populate("user", "name email")
+//             .populate("items.product")
+//             .sort({ createdAt: -1 });
+
+//         return res.status(200).json({
+//             success: true,
+//             count: orders.length,
+//             orders,
+//         });
+
+//     } catch (error) {
+
+//         console.error("Get All Orders Error:", error);
+
+//         return res.status(500).json({
+//             success: false,
+//             message: "Failed to fetch orders",
+//         });
+//     }
+// });
+
+
+// // =====================================
+// // GET SINGLE ORDER
+// // GET /orders/:orderId
+// // =====================================
+
+// router.get("/:orderId", authMiddleware, async (req, res) => {
+//     try {
+
+//         const order = await Order.findById(req.params.orderId)
+//             .populate("user", "name email")
+//             .populate("items.product");
+
+//         if (!order) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: "Order not found",
+//             });
+//         }
+
+//         return res.status(200).json({
+//             success: true,
+//             order,
+//         });
+
+//     } catch (error) {
+
+//         console.error("Get Order Error:", error);
+
+//         return res.status(500).json({
+//             success: false,
+//             message: "Failed to fetch order",
+//         });
+//     }
+// });
+
+
+// // =====================================
+// // UPDATE ORDER STATUS
+// // PUT /orders/:orderId
+// // =====================================
+
+// router.put("/:orderId", authMiddleware, async (req, res) => {
+//     try {
+
+//         const { status } = req.body;
+
+//         const allowedStatuses = [
+//             "pending",
+//             "processing",
+//             "shipped",
+//             "delivered",
+//             "cancelled",
+//         ];
+
+//         if (!allowedStatuses.includes(status)) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: "Invalid order status",
+//             });
+//         }
+
+//         const order = await Order.findByIdAndUpdate(
+//             req.params.orderId,
+//             {
+//                 status,
+//             },
+//             {
+//                 new: true,
+//                 runValidators: true,
+//             }
+//         )
+//             .populate("user", "name email")
+//             .populate("items.product");
+
+//         if (!order) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: "Order not found",
+//             });
+//         }
+
+//         return res.status(200).json({
+//             success: true,
+//             message: "Order status updated successfully",
+//             order,
+//         });
+
+//     } catch (error) {
+
+//         console.error("Update Order Error:", error);
+
+//         return res.status(500).json({
+//             success: false,
+//             message: "Failed to update order",
+//             error: error.message,
+//         });
+//     }
+// });
+
+
+// // =====================================
+// // DELETE ORDER
+// // DELETE /orders/:orderId
+// // =====================================
+
+// router.delete("/:orderId", authMiddleware, async (req, res) => {
+//     try {
+
+//         const order = await Order.findByIdAndDelete(
+//             req.params.orderId
+//         );
+
+//         if (!order) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: "Order not found",
+//             });
+//         }
+
+//         return res.status(200).json({
+//             success: true,
+//             message: "Order deleted successfully",
+//         });
+
+//     } catch (error) {
+
+//         console.error("Delete Order Error:", error);
+
+//         return res.status(500).json({
+//             success: false,
+//             message: "Failed to delete order",
+//             error: error.message,
+//         });
+//     }
+// });
+
+
+// module.exports = router;

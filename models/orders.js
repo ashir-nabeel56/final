@@ -9,6 +9,47 @@ const orderSchema = new mongoose.Schema(
             required: true,
         },
 
+        shippingInfo: {
+            type: new mongoose.Schema(
+                {
+                    fullName: {
+                        type: String,
+                        required: true,
+                        trim: true,
+                    },
+                    email: {
+                        type: String,
+                        required: true,
+                        trim: true,
+                        lowercase: true,
+                        match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    },
+                    phone: {
+                        type: String,
+                        required: true,
+                        trim: true,
+                    },
+                    address: {
+                        type: String,
+                        required: true,
+                        trim: true,
+                    },
+                    city: {
+                        type: String,
+                        required: true,
+                        trim: true,
+                    },
+                    postalCode: {
+                        type: String,
+                        required: true,
+                        trim: true,
+                    },
+                },
+                { _id: false }
+            ),
+            required: true,
+        },
+
         items: [
             {
                 product: {

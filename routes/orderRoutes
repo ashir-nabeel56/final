@@ -3,34 +3,8 @@ const express = require("express");
 const Cart = require("../models/cart");
 const Order = require("../models/orders");
 const authMiddleware = require("../middleware/authMiddleware");
-const adminMiddleware = require("../middleware/adminMiddleware");
-const renderOrderInvoice = require("../utils/orderInvoice");
 
 const router = express.Router();
-
-const getShippingInfo = (shippingInfo) => {
-    if (!shippingInfo || typeof shippingInfo !== "object" || Array.isArray(shippingInfo)) {
-        return null;
-    }
-
-    const fields = ["fullName", "email", "phone", "address", "city", "postalCode"];
-    const normalized = {};
-
-    for (const field of fields) {
-        if (typeof shippingInfo[field] !== "string" || !shippingInfo[field].trim()) {
-            return null;
-        }
-        normalized[field] = shippingInfo[field].trim();
-    }
-
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalized.email)) {
-        return null;
-    }
-
-    normalized.email = normalized.email.toLowerCase();
-    return normalized;
-};
-
 
 // ==================================================
 // PLACE ORDER
@@ -38,14 +12,6 @@ const getShippingInfo = (shippingInfo) => {
 // ==================================================
 router.post("/", authMiddleware, async (req, res) => {
     try {
-        const shippingInfo = getShippingInfo(req.body.shippingInfo);
-        if (!shippingInfo) {
-            return res.status(400).json({
-                success: false,
-                message: "Valid shippingInfo with fullName, email, phone, address, city and postalCode is required",
-            });
-        }
-
         const userId = req.user.userId;
 
         console.log("Place order user:", userId);
@@ -135,7 +101,6 @@ router.post("/", authMiddleware, async (req, res) => {
         // ==========================================
         const order = await Order.create({
             user: userId,
-            shippingInfo,
             items: orderItems,
             subtotal: Number(subtotal.toFixed(2)),
             discount,
@@ -228,7 +193,7 @@ router.get("/my", authMiddleware, async (req, res) => {
 // GET ALL ORDERS
 // GET /orders
 // ==================================================
-router.get("/", authMiddleware, adminMiddleware, async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
     try {
 
         const orders = await Order.find()
@@ -258,40 +223,6 @@ router.get("/", authMiddleware, adminMiddleware, async (req, res) => {
         });
     }
 });
-
-// ==================================================
-// GET PRINTABLE ORDER INVOICE
-// GET /orders/:orderId/invoice
-// ==================================================
-router.get(
-    "/:orderId/invoice",
-    authMiddleware,
-    adminMiddleware,
-    async (req, res) => {
-        try {
-            const order = await Order.findById(req.params.orderId)
-                .populate("user", "name email")
-                .populate("items.product");
-
-            if (!order) {
-                return res.status(404).json({
-                    success: false,
-                    message: "Order not found",
-                });
-            }
-
-            return res.type("html").status(200).send(renderOrderInvoice(order));
-        } catch (error) {
-            console.error("GET ORDER INVOICE ERROR:", error);
-            return res.status(500).json({
-                success: false,
-                message: "Failed to render order invoice",
-                error: error.message,
-            });
-        }
-    }
-);
-
 
 // ==================================================
 // CANCEL MY ORDER
@@ -429,16 +360,6 @@ router.get(
                 });
             }
 
-            if (
-                req.user.role !== "admin" &&
-                String(order.user?._id || order.user) !== String(req.user.userId)
-            ) {
-                return res.status(404).json({
-                    success: false,
-                    message: "Order not found",
-                });
-            }
-
             return res.status(200).json({
                 success: true,
                 order,
@@ -469,7 +390,6 @@ router.get(
 router.put(
     "/:orderId",
     authMiddleware,
-    adminMiddleware,
     async (req, res) => {
 
         try {
@@ -555,7 +475,6 @@ router.put(
 router.delete(
     "/:orderId",
     authMiddleware,
-    adminMiddleware,
     async (req, res) => {
 
         try {
